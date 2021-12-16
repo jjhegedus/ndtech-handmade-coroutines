@@ -1,0 +1,6 @@
+REM @echo off
+call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
+set path=C:\Projects\Git\22ndtech\ndtech_handmade\ndtech.test;%path%
+cd "c:\\\\projects\\git\\22ndtech\\ndtech_handmade\\ndtech.test"
+
+cl /MP /GS /analyze- /W4 /wd"4453" /wd"28204" /Zc:wchar_t /I"C:\Projects\Git\cppwinrt\10.0.14393.0" /I"..\" /I"C:\Projects\Git\22ndtech\ndtech_handmade\ndtech.test\" /I"Generated Files\" /I"C:\Projects\Git\22ndtech\ndtech_handmade\ndtech.test\Debug\Win32\temp\" /ZW:nostdlib /ZI /Gm- /Od /sdl /Fd"C:\Projects\Git\22ndtech\ndtech_handmade\ndtech.test\Debug\Win32\temp\vc140.pdb" /Zc:inline /fp:precise /D "_UNICODE" /D "UNICODE" /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "WINAPI_FAMILY=WINAPI_FAMILY_APP" /D "__WRL_NO_DEFAULT_LIB__" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /FU"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\store\references\platform.winmd" /MDd /EHsc /nologo /bigobj /await /std:c++latest /d1permissive- AppView.cpp

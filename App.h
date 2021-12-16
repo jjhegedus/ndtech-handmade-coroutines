@@ -1,97 +1,50 @@
 #pragma once
-#include "ndtech/App.h"
-#include "ndtech.components/SpinningCube.h"
-#include "ndtech.components/TextBillboard.h"
-#include "ndtech/TextRenderer.h"
-#include "ndtech/DistanceFieldRenderer.h"
 
+#include "pch.h"
+#include "winrt\base.h"
+#include "winrt\Windows.ApplicationModel.h"
+#include "DirectXScheduler.h"
+
+#include "Scheduler.h"
 
 namespace ndtech
 {
     namespace test
     {
-        class App :
-            public ndtech::App<App>
+        class App : public winrt::implements<App, winrt::Windows::ApplicationModel::Core::IFrameworkView>
         {
         public:
-            App()
-            {
-                this->m_holographicSpace = nullptr;
-            };
+            void Initialize(winrt::Windows::ApplicationModel::Core::CoreApplicationView const & appView);
 
-            ~App();
+            void Load(winrt::hstring);
 
-            // Inherited via IDeviceNotify
-            virtual void OnDeviceLost() override;
-            virtual void OnDeviceRestored() override;
+            void Uninitialize();
 
-            // Sets the holographic space. This is our closest analogue to setting a new window
-            // for the app.
-            void SetHolographicSpace(winrt::Windows::Graphics::Holographic::HolographicSpace holographicSpace);
+            void Run();
 
-            // Initialize the components that are specific to this app
-            void InitializeComponents();
+            void SetWindow(winrt::Windows::UI::Core::CoreWindow const & window);
 
-            // Starts the holographic frame and updates the content.
-            winrt::Windows::Graphics::Holographic::HolographicFrame Update();
+            void InitializeDirectXElements();
 
-            // Handle saving and loading of app state owned by AppMain.
-            void SaveAppState();
-            void LoadAppState();
+            // Application lifecycle event handlers
+            void OnViewActivated(winrt::Windows::ApplicationModel::Core::CoreApplicationView sender, winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs args);
+            void OnSuspending(IInspectable sender, winrt::Windows::ApplicationModel::ISuspendingEventArgs args);
+            void OnResuming(IInspectable sender, IInspectable args);
 
-            virtual bool Render(winrt::Windows::Graphics::Holographic::HolographicFrame holographicFrame);
+            // Window Event Handlers
+            void OnVisibilityChanged(winrt::Windows::UI::Core::CoreWindow sender, winrt::Windows::UI::Core::VisibilityChangedEventArgs args);
+            void OnWindowClosed(winrt::Windows::UI::Core::CoreWindow sender, winrt::Windows::UI::Core::CoreWindowEventArgs args);
+
+            // CoreWindow input event handlers
+            void OnKeyPressed(winrt::Windows::UI::Core::CoreWindow sender, winrt::Windows::UI::Core::KeyEventArgs args);
 
         private:
-            // Used to notify the app when the positional tracking state changes.
-            void OnLocatabilityChanged(
-                winrt::Windows::Perception::Spatial::SpatialLocator sender,
-                winrt::Windows::IInspectable args);
-
-            // Asynchronously creates resources for new holographic cameras.
-            void OnCameraAdded(
-                winrt::Windows::Graphics::Holographic::HolographicSpace sender,
-                winrt::Windows::Graphics::Holographic::HolographicSpaceCameraAddedEventArgs args);
-
-            winrt::Windows::Foundation::IAsyncAction App::AddHolographicCameraAsync(
-                DeviceResources& deviceResources,
-                winrt::Windows::Foundation::Deferral deferral,
-                winrt::Windows::Graphics::Holographic::HolographicCamera camera);
-
-
-            // Synchronously releases resources for holographic cameras that are no longer
-            // attached to the system.
-            void OnCameraRemoved(
-                winrt::Windows::Graphics::Holographic::HolographicSpace sender,
-                winrt::Windows::Graphics::Holographic::HolographicSpaceCameraRemovedEventArgs args);
-
-            winrt::Windows::Foundation::IAsyncAction RemoveHolographicCameraAsync(
-                DeviceResources& deviceResources,
-                winrt::Windows::Graphics::Holographic::HolographicCamera camera);
-
-            void RenderOffscreenTexture();
-
-            // SpatialLocator that is attached to the primary camera.
-            winrt::Windows::Perception::Spatial::SpatialLocator                     m_locator = nullptr;
-
-            // Event registration tokens.
-            winrt::event_token                                                      m_cameraAddedToken;
-            winrt::event_token                                                      m_cameraRemovedToken;
-            winrt::event_token                                                      m_locatabilityChangedToken;
-
-            //Clears event registration state. Used when changing to a new HolographicSpace
-            // and when tearing down AppMain.
-            void UnregisterHolographicEventHandlers();
-
-            // Components
-            ndtech::components::SpinningCube*               m_spinningCube;
-            ndtech::components::TextBillboard*              m_textBillboard;
-
-            // Component support types
-            // Renders text off-screen. Used to create a texture to render on the quad.
-            std::unique_ptr<TextRenderer>                                           m_textRenderer;
-
-            // Performs a gather operation to create a 2D pixel distance map.
-            std::unique_ptr<DistanceFieldRenderer>                                  m_distanceFieldRenderer;
+            bool                                                m_windowClosed = false;
+            bool                                                m_windowVisible = true;
+            DirectXScheduler                                    m_directXScheduler;
+            // The holographic space the app will use for rendering.
+            winrt::Windows::Graphics::Holographic::HolographicSpace   m_holographicSpace = nullptr;
+            Scheduler m_scheduler;
         };
     }
 }

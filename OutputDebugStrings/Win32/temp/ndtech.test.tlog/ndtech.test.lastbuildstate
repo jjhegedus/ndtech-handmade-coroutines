@@ -1,0 +1,2 @@
+#TargetFrameworkVersion=:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native64Bit:WindowsTargetPlatformVersion=10.0.14393.0
+OutputDebugStrings|Win32|C:\Projects\Git\22ndtech\ndtech_handmade\ndtech.test\|
