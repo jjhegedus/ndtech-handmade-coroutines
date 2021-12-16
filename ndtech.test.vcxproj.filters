@@ -4,32 +4,11 @@
     <ClCompile Include="AppView.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Utilities.cpp" />
-    <ClCompile Include="DirectXScheduler.cpp" />
-    <ClCompile Include="DirectXSchedulingCoroutine.cpp" />
-    <ClCompile Include="VoidCoroutine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Utilities.h" />
-    <ClInclude Include="DirectXHelper.h" />
-    <ClInclude Include="BaseCoroutine.h" />
-    <ClInclude Include="SynchronousCoroutine.h" />
-    <ClInclude Include="ResumableCoroutine.h" />
-    <ClInclude Include="BaserCoroutine.h" />
-    <ClInclude Include="ShaderStructures.h" />
-    <ClInclude Include="EveryOtherCoroutine.h" />
-    <ClInclude Include="IAsyncSpecializations.h" />
-    <ClInclude Include="DirectXScheduler.h" />
-    <ClInclude Include="DirectXSchedulingCoroutine.h" />
-    <ClInclude Include="DirectXVertexShader.h" />
-    <ClInclude Include="DataProducingCoroutine.h" />
-    <ClInclude Include="VoidCoroutine.h" />
-    <ClInclude Include="ResumableDataProducingCoroutine.h" />
-    <ClInclude Include="Scheduler.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.scale-100.png" />
@@ -60,29 +39,44 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Content\PixelShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\CreateDistanceFieldPixelShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\FullscreenQuadVertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\TexturePixelShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\UseDistanceFieldPixelShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SpinningCubeGeometryShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TextBillboardGeometryShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SpinningCubeVertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SpinningCubeVPRTVertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\TextBillboardVertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\TextBillboardVPRTVertexShader.hlsl">
+      <Filter>Content\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ResourceCompile Include="ndtech.test.rc" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="placeholder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Content\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="GeometryShader.hlsl">
-      <Filter>Content\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Content\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="VPRTVertexShader.hlsl">
-      <Filter>Content\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="TextBillboardVertexShader.hlsl">
-      <Filter>Content\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="DistanceFieldPixelShader.hlsl">
-      <Filter>Content\Shaders</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

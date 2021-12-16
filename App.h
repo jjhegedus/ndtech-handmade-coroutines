@@ -1,50 +1,49 @@
 #pragma once
+#include "ndtech/App.h"
+#include "ndtech.components/SpinningCube.h"
+#include "ndtech.components/TextBillboard.h"
 
-#include "pch.h"
-#include "winrt\base.h"
-#include "winrt\Windows.ApplicationModel.h"
-#include "DirectXScheduler.h"
-
-#include "Scheduler.h"
 
 namespace ndtech
 {
     namespace test
     {
-        class App : public winrt::implements<App, winrt::Windows::ApplicationModel::Core::IFrameworkView>
+        class App :
+            public ndtech::App<App>
         {
         public:
-            void Initialize(winrt::Windows::ApplicationModel::Core::CoreApplicationView const & appView);
+            App()
+            {
+                this->m_holographicSpace = nullptr;
+            };
 
-            void Load(winrt::hstring);
+            ~App();
 
-            void Uninitialize();
+            // Initialize the components that are specific to this app
+            void InitializeComponents();
 
-            void Run();
+            // Starts the holographic frame and updates the content.
+            winrt::Windows::Graphics::Holographic::HolographicFrame Update();
 
-            void SetWindow(winrt::Windows::UI::Core::CoreWindow const & window);
+            // Handle saving and loading of app state owned by AppMain.
+            void SaveAppState();
+            void LoadAppState();
 
-            void InitializeDirectXElements();
-
-            // Application lifecycle event handlers
-            void OnViewActivated(winrt::Windows::ApplicationModel::Core::CoreApplicationView sender, winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs args);
-            void OnSuspending(IInspectable sender, winrt::Windows::ApplicationModel::ISuspendingEventArgs args);
-            void OnResuming(IInspectable sender, IInspectable args);
-
-            // Window Event Handlers
-            void OnVisibilityChanged(winrt::Windows::UI::Core::CoreWindow sender, winrt::Windows::UI::Core::VisibilityChangedEventArgs args);
-            void OnWindowClosed(winrt::Windows::UI::Core::CoreWindow sender, winrt::Windows::UI::Core::CoreWindowEventArgs args);
-
-            // CoreWindow input event handlers
-            void OnKeyPressed(winrt::Windows::UI::Core::CoreWindow sender, winrt::Windows::UI::Core::KeyEventArgs args);
+            virtual bool Render(winrt::Windows::Graphics::Holographic::HolographicFrame holographicFrame);
 
         private:
-            bool                                                m_windowClosed = false;
-            bool                                                m_windowVisible = true;
-            DirectXScheduler                                    m_directXScheduler;
-            // The holographic space the app will use for rendering.
-            winrt::Windows::Graphics::Holographic::HolographicSpace   m_holographicSpace = nullptr;
-            Scheduler m_scheduler;
+            //void RenderOffscreenTexture();
+
+            // Components
+            ndtech::components::SpinningCube*               m_spinningCube;
+            ndtech::components::TextBillboard*              m_textBillboard;
+
+            //// Component support types
+            //// Renders text off-screen. Used to create a texture to render on the quad.
+            //std::unique_ptr<TextRenderer>                                           m_textRenderer;
+
+            //// Performs a gather operation to create a 2D pixel distance map.
+            //std::unique_ptr<DistanceFieldRenderer>                                  m_distanceFieldRenderer;
         };
     }
 }
